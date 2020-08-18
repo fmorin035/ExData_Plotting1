@@ -1,0 +1,10 @@
+c4w1<-read.delim("household_power_consumption.txt",header=TRUE,sep=";",nrows = 1:133000)
+c4w1<-as_tibble(c4w1)
+test<-c4w1%>% mutate_at(c("Date"), as.Date,format="%d/%m/%Y")
+test2<-filter(test, Date >="2007-02-01" & Date <= "2007-02-02")
+test3<-mutate_at(test2,c("Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2"),as.numeric)
+
+par(mar=c(5,5,3,2))
+hist(test3$Global_active_power,col = "Red",main= "Global Active Power", xlab = "Global Active Power (kilowatts)", ylim = c(0, 1200),las=1)
+dev.copy(png, file = "plot1.png")
+dev.off()
